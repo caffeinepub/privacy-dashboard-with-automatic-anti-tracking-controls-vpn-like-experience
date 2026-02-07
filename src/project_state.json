@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Build a VPN product with a privacy feature that automatically detects and stops tracking.",
+  "architectural_notes": [
+    "Scope includes VPN functionality plus automatic tracker detection and blocking/anti-tracking privacy controls."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Minimal privacy shield logo with a stop-tracking motif, flat vector style, dark background compatible (vpn-shield-logo.dim_512x512.png)\n- Wide hero illustration showing abstract network nodes with blocked tracker dots, muted green/charcoal palette, flat/modern style (privacy-hero.dim_1200x600.png)",
+  "existing_features": [
+    {
+      "id": "feature-build-a-vpn-like-privacy-dashboard-experience-without-implementing-an-actual-vpn-that-helps-users-automatically-stop-tracking-by-detecting-common-web-app-trackers-and-blocking-them-within-the-app-s-simulated-traffic-model",
+      "title": "Build a VPN-like Privacy Dashboard experience (without implementing an actual VPN) that helps users automatically stop tracking by detecting common web/app trackers and blocking them within the app’s simulated traffic model.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-tracker-detection-for-user-provided-destinations-allow-the-user-to-input-a-url-domain-and-optionally-paste-a-list-scan-it-against-a-built-in-tracker-blocklist-and-show-which-tracker-domains-would-be-blocked-when-auto-stop-tracking-is-enabled",
+      "title": "Implement tracker detection for user-provided destinations: allow the user to input a URL/domain (and optionally paste a list), scan it against a built-in tracker blocklist, and show which tracker domains would be blocked when “Auto-stop tracking” is enabled.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-connect-frontend-to-backend-with-react-query-for-loading-saving-privacy-settings-and-custom-block-entries-including-optimistic-ui-updates-and-clear-error-states",
+      "title": "Connect frontend to backend with React Query for loading/saving privacy settings and custom block entries, including optimistic UI updates and clear error states.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-protection-log-view-that-records-recent-scans-actions-in-the-ui-client-side-including-timestamp-input-domain-url-number-of-trackers-detected-and-number-blocked-based-on-current-settings",
+      "title": "Add a “Protection Log” view that records recent scans/actions in the UI (client-side), including timestamp, input domain/URL, number of trackers detected, and number blocked based on current settings.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-coherent-distinctive-visual-theme-for-a-privacy-security-product-avoid-blue-purple-define-consistent-colors-typography-spacing-and-component-styling-across-the-privacy-dashboard-including-light-dark-friendly-contrast",
+      "title": "Apply a coherent, distinctive visual theme for a privacy/security product (avoid blue/purple): define consistent colors, typography, spacing, and component styling across the Privacy Dashboard, including light/dark-friendly contrast.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-and-render-generated-static-image-assets-logo-and-hero-from-frontend-public-assets-generated-and-use-them-in-the-dashboard-header-empty-state-areas",
+      "title": "Add and render generated static image assets (logo and hero) from frontend/public/assets/generated and use them in the dashboard header/empty-state areas.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create a VPN with a privacy feature that automatically detects and stops tracking (tracker blocking/anti-tracking).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Create a Motoko backend API to manage anti-tracking settings and blocklists per user principal, including: get/set Auto-stop tracking toggle; get blocklist; add/remove custom blocked domains; reset to defaults.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Privacy dashboard with automatic anti-tracking controls (VPN-like experience)",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

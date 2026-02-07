@@ -1,0 +1,135 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-build-a-vpn-like-privacy-dashboard-experience-without-implementing-an-actual-vpn-that-helps-users-automatically-stop-tracking-by-detecting-common-web-app-trackers-and-blocking-them-within-the-app-s-simulated-traffic-model",
+      "featureTitle": "Build a VPN-like Privacy Dashboard experience (without implementing an actual VPN) that helps users automatically stop tracking by detecting common web/app trackers and blocking them within the app’s simulated traffic model.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/privacy/Header.tsx",
+        "frontend/src/components/privacy/ProtectionStatusCard.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-tracker-detection-for-user-provided-destinations-allow-the-user-to-input-a-url-domain-and-optionally-paste-a-list-scan-it-against-a-built-in-tracker-blocklist-and-show-which-tracker-domains-would-be-blocked-when-auto-stop-tracking-is-enabled",
+      "featureTitle": "Implement tracker detection for user-provided destinations: allow the user to input a URL/domain (and optionally paste a list), scan it against a built-in tracker blocklist, and show which tracker domains would be blocked when “Auto-stop tracking” is enabled.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/privacy/ScanResultsList.tsx",
+        "frontend/src/components/privacy/TrackerScanner.tsx",
+        "frontend/src/lib/domainParsing.ts",
+        "frontend/src/lib/trackerBlocklist.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-connect-frontend-to-backend-with-react-query-for-loading-saving-privacy-settings-and-custom-block-entries-including-optimistic-ui-updates-and-clear-error-states",
+      "featureTitle": "Connect frontend to backend with React Query for loading/saving privacy settings and custom block entries, including optimistic UI updates and clear error states.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/auth/LoginButton.tsx",
+        "frontend/src/components/privacy/BlocklistManager.tsx",
+        "frontend/src/components/privacy/Header.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-protection-log-view-that-records-recent-scans-actions-in-the-ui-client-side-including-timestamp-input-domain-url-number-of-trackers-detected-and-number-blocked-based-on-current-settings",
+      "featureTitle": "Add a “Protection Log” view that records recent scans/actions in the UI (client-side), including timestamp, input domain/URL, number of trackers detected, and number blocked based on current settings.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/privacy/ProtectionLogView.tsx",
+        "frontend/src/components/privacy/TrackerScanner.tsx",
+        "frontend/src/hooks/useProtectionLog.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-coherent-distinctive-visual-theme-for-a-privacy-security-product-avoid-blue-purple-define-consistent-colors-typography-spacing-and-component-styling-across-the-privacy-dashboard-including-light-dark-friendly-contrast",
+      "featureTitle": "Apply a coherent, distinctive visual theme for a privacy/security product (avoid blue/purple): define consistent colors, typography, spacing, and component styling across the Privacy Dashboard, including light/dark-friendly contrast.",
+      "files": [
+        "frontend/src/components/privacy/ProtectionStatusCard.tsx",
+        "frontend/src/components/privacy/ScanResultsList.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-and-render-generated-static-image-assets-logo-and-hero-from-frontend-public-assets-generated-and-use-them-in-the-dashboard-header-empty-state-areas",
+      "featureTitle": "Add and render generated static image assets (logo and hero) from frontend/public/assets/generated and use them in the dashboard header/empty-state areas.",
+      "files": [
+        "frontend/src/components/privacy/Header.tsx",
+        "frontend/src/components/privacy/ProtectionLogView.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

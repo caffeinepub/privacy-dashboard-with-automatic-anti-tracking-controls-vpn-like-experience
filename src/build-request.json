@@ -1,0 +1,154 @@
+{
+  "kind": "build_request",
+  "title": "Privacy dashboard with automatic anti-tracking controls (VPN-like experience)",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Build a VPN-like Privacy Dashboard experience (without implementing an actual VPN) that helps users automatically stop tracking by detecting common web/app trackers and blocking them within the app’s simulated traffic model.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Create a VPN that has a privacy feature that automatically stops tracking"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The UI clearly states it is a privacy/anti-tracking dashboard and not a real VPN tunnel.",
+        "A primary toggle labeled in English (e.g., “Auto-stop tracking”) enables/disables anti-tracking.",
+        "The main screen shows current protection status (On/Off) and a short explanation of what happens when enabled."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement tracker detection for user-provided destinations: allow the user to input a URL/domain (and optionally paste a list), scan it against a built-in tracker blocklist, and show which tracker domains would be blocked when “Auto-stop tracking” is enabled.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "privacy feature that automatically stops tracking"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can enter a URL/domain and trigger a scan.",
+        "Results display: (a) detected tracker matches, (b) non-tracker domains, and (c) a summary count.",
+        "When Auto-stop tracking is ON, matched trackers are labeled “Blocked”; when OFF, labeled “Allowed.”"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Create a Motoko backend API to manage anti-tracking settings and blocklists per user principal, including: get/set Auto-stop tracking toggle; get blocklist; add/remove custom blocked domains; reset to defaults.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "automatically stops tracking"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes methods to read and update the user’s anti-tracking enabled state.",
+        "Backend persists user custom blocked domains keyed by caller principal.",
+        "Backend provides a default blocklist (hardcoded in canister) and merges it with user custom entries when returning the effective list.",
+        "Anonymous/unauthenticated usage is handled gracefully (e.g., defaults are used until the user signs in), without crashes."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Connect frontend to backend with React Query for loading/saving privacy settings and custom block entries, including optimistic UI updates and clear error states.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "privacy feature that automatically stops tracking"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Toggling Auto-stop tracking updates the UI immediately and persists to backend.",
+        "Adding/removing a custom blocked domain updates the list and persists to backend.",
+        "Network/loading states are visible (skeleton/spinner and disabled buttons where appropriate).",
+        "Errors are shown in English with a retry action."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Add a “Protection Log” view that records recent scans/actions in the UI (client-side), including timestamp, input domain/URL, number of trackers detected, and number blocked based on current settings.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "automatically stops tracking"
+        ]
+      },
+      "acceptanceCriteria": [
+        "After each scan, a new log entry appears at the top of the log list.",
+        "Log entries include time, target, detected count, and blocked count.",
+        "User can clear the protection log from the UI."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Apply a coherent, distinctive visual theme for a privacy/security product (avoid blue/purple): define consistent colors, typography, spacing, and component styling across the Privacy Dashboard, including light/dark-friendly contrast.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Create a VPN that has a privacy feature that automatically stops tracking"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Theme is consistent across all new screens/components.",
+        "Color palette avoids blue and purple as primary accents.",
+        "The UI has clear hierarchy and accessible contrast for key states (Protected/Unprotected, Blocked/Allowed)."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Add and render generated static image assets (logo and hero) from frontend/public/assets/generated and use them in the dashboard header/empty-state areas.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Create a VPN that has a privacy feature that automatically stops tracking"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Images exist under frontend/public/assets/generated with the specified filenames.",
+        "Frontend references these images as static assets (no backend image routing).",
+        "Logo and hero are visible in the UI without layout shifts or broken links."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not implement or claim to implement a real VPN tunnel, packet routing, device-wide traffic interception, or OS-level tracking prevention; provide an in-app anti-tracking dashboard and simulated blocking based on user input.",
+    "Backend must remain a single Motoko actor (all logic in the main actor file).",
+    "Do not modify files under frontend/src/components/ui or other immutablePaths; compose those components instead.",
+    "All user-facing text must be in English."
+  ],
+  "nonGoals": [
+    "Browser extension functionality (e.g., intercepting real browsing requests).",
+    "DNS-level blocking, firewall rules, or system proxy configuration.",
+    "Third-party authentication providers (only Internet Identity if authentication is used).",
+    "Real-time streaming logs or WebSocket-based updates."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Minimal privacy shield logo with a stop-tracking motif, flat vector style, dark background compatible (vpn-shield-logo.dim_512x512.png)",
+      "Wide hero illustration showing abstract network nodes with blocked tracker dots, muted green/charcoal palette, flat/modern style (privacy-hero.dim_1200x600.png)"
+    ],
+    "edits": []
+  }
+}

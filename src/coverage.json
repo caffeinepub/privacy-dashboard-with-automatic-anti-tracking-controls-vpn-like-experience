@@ -1,0 +1,243 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-07T00:15:17.582Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 7,
+    "implemented": 6,
+    "items": [
+      {
+        "id": "REQ-1",
+        "summary": "Build a VPN-like Privacy Dashboard experience (without implementing an actual VPN) that helps users automatically stop tracking by detecting common web/app trackers and blocking them within the app’s simulated traffic model.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/components/privacy/ProtectionStatusCard.tsx",
+          "frontend/src/components/privacy/Header.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/components/privacy/ProtectionStatusCard.tsx",
+          "frontend/src/components/privacy/Header.tsx"
+        ]
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Implement tracker detection for user-provided destinations: allow the user to input a URL/domain (and optionally paste a list), scan it against a built-in tracker blocklist, and show which tracker domains would be blocked when “Auto-stop tracking” is enabled.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/lib/trackerBlocklist.ts",
+          "frontend/src/lib/domainParsing.ts",
+          "frontend/src/components/privacy/TrackerScanner.tsx",
+          "frontend/src/components/privacy/ScanResultsList.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/lib/trackerBlocklist.ts",
+          "frontend/src/lib/domainParsing.ts",
+          "frontend/src/components/privacy/TrackerScanner.tsx",
+          "frontend/src/components/privacy/ScanResultsList.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Create a Motoko backend API to manage anti-tracking settings and blocklists per user principal, including: get/set Auto-stop tracking toggle; get blocklist; add/remove custom blocked domains; reset to defaults.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-4",
+        "summary": "Connect frontend to backend with React Query for loading/saving privacy settings and custom block entries, including optimistic UI updates and clear error states.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/usePrivacySettings.ts",
+          "frontend/src/hooks/useBlocklistMutations.ts",
+          "frontend/src/components/privacy/BlocklistManager.tsx",
+          "frontend/src/components/privacy/QueryState.tsx",
+          "frontend/src/App.tsx",
+          "frontend/src/components/auth/LoginButton.tsx",
+          "frontend/src/components/privacy/Header.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/privacy/BlocklistManager.tsx",
+          "frontend/src/App.tsx",
+          "frontend/src/components/auth/LoginButton.tsx",
+          "frontend/src/components/privacy/Header.tsx"
+        ]
+      },
+      {
+        "id": "REQ-5",
+        "summary": "Add a “Protection Log” view that records recent scans/actions in the UI (client-side), including timestamp, input domain/URL, number of trackers detected, and number blocked based on current settings.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/types/protectionLog.ts",
+          "frontend/src/hooks/useProtectionLog.ts",
+          "frontend/src/components/privacy/ProtectionLogView.tsx",
+          "frontend/src/components/privacy/TrackerScanner.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useProtectionLog.ts",
+          "frontend/src/components/privacy/ProtectionLogView.tsx",
+          "frontend/src/components/privacy/TrackerScanner.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-6",
+        "summary": "Apply a coherent, distinctive visual theme for a privacy/security product (avoid blue/purple): define consistent colors, typography, spacing, and component styling across the Privacy Dashboard, including light/dark-friendly contrast.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js",
+          "frontend/src/components/privacy/ProtectionStatusCard.tsx",
+          "frontend/src/components/privacy/ScanResultsList.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js",
+          "frontend/src/components/privacy/ProtectionStatusCard.tsx",
+          "frontend/src/components/privacy/ScanResultsList.tsx"
+        ]
+      },
+      {
+        "id": "REQ-7",
+        "summary": "Add and render generated static image assets (logo and hero) from frontend/public/assets/generated and use them in the dashboard header/empty-state areas.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/public/assets/generated/vpn-shield-logo.dim_512x512.png",
+          "frontend/public/assets/generated/privacy-hero.dim_1200x600.png",
+          "frontend/src/components/privacy/Header.tsx",
+          "frontend/src/components/privacy/ProtectionLogView.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/public/assets/generated/vpn-shield-logo.dim_512x512.png",
+          "frontend/public/assets/generated/privacy-hero.dim_1200x600.png",
+          "frontend/src/components/privacy/Header.tsx",
+          "frontend/src/components/privacy/ProtectionLogView.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/authorization/MixinAuthorization.mo",
+    "backend/authorization/access-control.mo",
+    "backend/main.mo",
+    "build-request.json",
+    "build-template/Dockerfile",
+    "build-template/LICENSE",
+    "build-template/README.md",
+    "build-template/deploy.sh",
+    "build-template/icp.yaml",
+    "build-template/package.json",
+    "build-template/pnpm-lock.yaml",
+    "build-template/pnpm-workspace.yaml",
+    "build-template/scripts/prune-unused-images.js",
+    "build-template/scripts/resize-images.js",
+    "build-template/src/backend/canister.yaml",
+    "build-template/src/backend/system-idl/aaaaa-aa.did",
+    "build-template/src/frontend/canister.yaml",
+    "build-template/src/frontend/components.json",
+    "build-template/src/frontend/env.json",
+    "build-template/src/frontend/eslint-rules/no-bigint-in-query-keys.js",
+    "build-template/src/frontend/eslint-rules/require-internet-identity-provider.js",
+    "build-template/src/frontend/eslint.config.js",
+    "build-template/src/frontend/package.json",
+    "build-template/src/frontend/postcss.config.js",
+    "build-template/src/frontend/src/components/ui/accordion.tsx",
+    "build-template/src/frontend/src/components/ui/alert-dialog.tsx",
+    "build-template/src/frontend/src/components/ui/alert.tsx",
+    "build-template/src/frontend/src/components/ui/aspect-ratio.tsx",
+    "build-template/src/frontend/src/components/ui/avatar.tsx",
+    "build-template/src/frontend/src/components/ui/badge.tsx",
+    "build-template/src/frontend/src/components/ui/breadcrumb.tsx",
+    "build-template/src/frontend/src/components/ui/button.tsx",
+    "build-template/src/frontend/src/components/ui/calendar.tsx",
+    "build-template/src/frontend/src/components/ui/card.tsx",
+    "build-template/src/frontend/src/components/ui/carousel.tsx",
+    "build-template/src/frontend/src/components/ui/chart.tsx",
+    "build-template/src/frontend/src/components/ui/checkbox.tsx",
+    "build-template/src/frontend/src/components/ui/collapsible.tsx",
+    "build-template/src/frontend/src/components/ui/command.tsx",
+    "build-template/src/frontend/src/components/ui/context-menu.tsx",
+    "build-template/src/frontend/src/components/ui/dialog.tsx",
+    "build-template/src/frontend/src/components/ui/drawer.tsx",
+    "build-template/src/frontend/src/components/ui/dropdown-menu.tsx",
+    "build-template/src/frontend/src/components/ui/form.tsx",
+    "build-template/src/frontend/src/components/ui/hover-card.tsx",
+    "build-template/src/frontend/src/components/ui/input-otp.tsx",
+    "build-template/src/frontend/src/components/ui/input.tsx",
+    "build-template/src/frontend/src/components/ui/label.tsx",
+    "build-template/src/frontend/src/components/ui/menubar.tsx",
+    "build-template/src/frontend/src/components/ui/navigation-menu.tsx",
+    "build-template/src/frontend/src/components/ui/pagination.tsx",
+    "build-template/src/frontend/src/components/ui/popover.tsx",
+    "build-template/src/frontend/src/components/ui/progress.tsx",
+    "build-template/src/frontend/src/components/ui/radio-group.tsx",
+    "build-template/src/frontend/src/components/ui/resizable.tsx",
+    "build-template/src/frontend/src/components/ui/scroll-area.tsx",
+    "build-template/src/frontend/src/components/ui/select.tsx",
+    "build-template/src/frontend/src/components/ui/separator.tsx",
+    "build-template/src/frontend/src/components/ui/sheet.tsx",
+    "build-template/src/frontend/src/components/ui/sidebar.tsx",
+    "build-template/src/frontend/src/components/ui/skeleton.tsx",
+    "build-template/src/frontend/src/components/ui/slider.tsx",
+    "build-template/src/frontend/src/components/ui/sonner.tsx",
+    "build-template/src/frontend/src/components/ui/switch.tsx",
+    "build-template/src/frontend/src/components/ui/table.tsx",
+    "build-template/src/frontend/src/components/ui/tabs.tsx",
+    "build-template/src/frontend/src/components/ui/textarea.tsx",
+    "build-template/src/frontend/src/components/ui/toggle-group.tsx",
+    "build-template/src/frontend/src/components/ui/toggle.tsx",
+    "build-template/src/frontend/src/components/ui/tooltip.tsx",
+    "build-template/src/frontend/src/hooks/use-mobile.tsx",
+    "build-template/src/frontend/src/lib/utils.ts",
+    "build-template/src/frontend/tsconfig.json",
+    "build-template/src/frontend/vite.config.js",
+    "build-template/tsconfig.json",
+    "caffeine.lock.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/public/assets/generated/privacy-hero.dim_1200x600.png",
+    "frontend/public/assets/generated/vpn-shield-logo.dim_512x512.png",
+    "frontend/src/App.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/auth/LoginButton.tsx",
+    "frontend/src/components/auth/ProfileSetupDialog.tsx",
+    "frontend/src/components/privacy/BlocklistManager.tsx",
+    "frontend/src/components/privacy/Header.tsx",
+    "frontend/src/components/privacy/ProtectionLogView.tsx",
+    "frontend/src/components/privacy/ProtectionStatusCard.tsx",
+    "frontend/src/components/privacy/ScanResultsList.tsx",
+    "frontend/src/components/privacy/TrackerScanner.tsx",
+    "frontend/src/config.ts",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useProtectionLog.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/lib/domainParsing.ts",
+    "frontend/src/lib/trackerBlocklist.ts",
+    "frontend/src/main.tsx",
+    "frontend/src/ui-summary.json",
+    "frontend/src/utils/StorageClient.ts",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

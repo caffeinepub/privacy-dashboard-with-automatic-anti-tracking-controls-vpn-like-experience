@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 0.5rem;
+        /* Light mode - Muted green/charcoal theme */
+        --background: 0.98 0 0;
+        --foreground: 0.25 0 0;
+        --card: 1 0 0;
+        --card-foreground: 0.25 0 0;
+        --popover: 1 0 0;
+        --popover-foreground: 0.25 0 0;
+        --primary: 0.55 0.12 155;
+        --primary-foreground: 0.98 0 0;
+        --secondary: 0.92 0.02 155;
+        --secondary-foreground: 0.25 0 0;
+        --muted: 0.94 0 0;
+        --muted-foreground: 0.50 0 0;
+        --accent: 0.88 0.03 155;
+        --accent-foreground: 0.25 0 0;
+        --destructive: 0.60 0.22 25;
+        --destructive-foreground: 0.98 0 0;
+        --border: 0.88 0 0;
+        --input: 0.88 0 0;
+        --ring: 0.55 0.12 155;
+        --success: 0.65 0.15 145;
+        --success-foreground: 0.98 0 0;
+        --warning: 0.70 0.18 65;
+        --warning-foreground: 0.25 0 0;
+        --protected: 0.65 0.15 145;
+        --protected-foreground: 0.98 0 0;
+        --blocked: 0.60 0.22 25;
+        --blocked-foreground: 0.98 0 0;
+        --allowed: 0.70 0.18 65;
+        --allowed-foreground: 0.25 0 0;
+    }
+
+    .dark {
+        --background: 0.18 0 0;
+        --foreground: 0.95 0 0;
+        --card: 0.22 0 0;
+        --card-foreground: 0.95 0 0;
+        --popover: 0.20 0 0;
+        --popover-foreground: 0.95 0 0;
+        --primary: 0.65 0.15 145;
+        --primary-foreground: 0.18 0 0;
+        --secondary: 0.28 0.02 155;
+        --secondary-foreground: 0.95 0 0;
+        --muted: 0.28 0 0;
+        --muted-foreground: 0.65 0 0;
+        --accent: 0.35 0.05 155;
+        --accent-foreground: 0.95 0 0;
+        --destructive: 0.55 0.20 25;
+        --destructive-foreground: 0.95 0 0;
+        --border: 0.32 0 0;
+        --input: 0.32 0 0;
+        --ring: 0.65 0.15 145;
+        --success: 0.65 0.15 145;
+        --success-foreground: 0.18 0 0;
+        --warning: 0.70 0.18 65;
+        --warning-foreground: 0.18 0 0;
+        --protected: 0.65 0.15 145;
+        --protected-foreground: 0.18 0 0;
+        --blocked: 0.55 0.20 25;
+        --blocked-foreground: 0.95 0 0;
+        --allowed: 0.70 0.18 65;
+        --allowed-foreground: 0.18 0 0;
+    }
+
+    * {
+        @apply border-border;
+    }
+    
+    body {
+        @apply bg-background text-foreground;
+        font-feature-settings: "rlig" 1, "calt" 1;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-semibold tracking-tight;
+    }
+}
+
+@layer utilities {
+    .text-protected {
+        color: oklch(var(--protected));
+    }
+    
+    .bg-protected {
+        background-color: oklch(var(--protected));
+    }
+    
+    .text-protected-foreground {
+        color: oklch(var(--protected-foreground));
+    }
+    
+    .text-blocked {
+        color: oklch(var(--blocked));
+    }
+    
+    .bg-blocked {
+        background-color: oklch(var(--blocked));
+    }
+    
+    .text-blocked-foreground {
+        color: oklch(var(--blocked-foreground));
+    }
+    
+    .text-allowed {
+        color: oklch(var(--allowed));
+    }
+    
+    .bg-allowed {
+        background-color: oklch(var(--allowed));
+    }
+    
+    .text-allowed-foreground {
+        color: oklch(var(--allowed-foreground));
+    }
+    
+    .text-success {
+        color: oklch(var(--success));
+    }
+    
+    .bg-success {
+        background-color: oklch(var(--success));
+    }
+    
+    .text-success-foreground {
+        color: oklch(var(--success-foreground));
+    }
+}

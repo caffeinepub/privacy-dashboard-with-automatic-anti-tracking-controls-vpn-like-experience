@@ -1,0 +1,16 @@
+{
+  "frontend/src/index.css": "Global styles with OKLCH color system defining a muted green/charcoal theme for light and dark modes, including custom semantic colors for protection states (protected, blocked, allowed).",
+  "frontend/src/App.tsx": "Main application component with ThemeProvider, tabbed navigation between Scanner/Blocklist/Activity Log, protection status card, header, footer, and profile setup dialog for new users.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for all backend operations including user profile management, privacy settings (get/set auto-stop tracking), and blocklist mutations (add/remove) with optimistic updates and error handling.",
+  "frontend/src/hooks/useProtectionLog.ts": "Custom hook managing client-side protection log with localStorage persistence, supporting add entry, clear log, and automatic limiting to 100 entries.",
+  "frontend/src/lib/trackerBlocklist.ts": "Tracker detection utilities with built-in list of 36 common tracker domains, domain normalization, suffix matching logic, and effective blocklist merging.",
+  "frontend/src/lib/domainParsing.ts": "Domain input parsing utilities that handle single/multiple domain inputs, normalize domains, validate format, and return structured results with error messages.",
+  "frontend/src/components/privacy/Header.tsx": "Application header displaying logo, app name with disclaimer, authenticated user greeting, and login button.",
+  "frontend/src/components/privacy/ProtectionStatusCard.tsx": "Protection status card showing current protection state (active/disabled), auto-stop tracking toggle with optimistic updates, and login prompt for anonymous users.",
+  "frontend/src/components/privacy/TrackerScanner.tsx": "Tracker scanner interface with single/multiple domain input modes, scan button triggering detection against effective blocklist, results display, and automatic protection log entry creation.",
+  "frontend/src/components/privacy/ScanResultsList.tsx": "Scan results display component showing summary statistics, categorized lists of detected trackers and clean domains with blocked/allowed badges based on auto-stop setting.",
+  "frontend/src/components/privacy/BlocklistManager.tsx": "Blocklist management interface displaying built-in tracker domains (36), custom user domains with add/remove functionality, total blocked count, and login prompt for persistence.",
+  "frontend/src/components/privacy/ProtectionLogView.tsx": "Protection activity log view displaying chronological scan history with timestamps, detected/blocked counts, protection status badges, hero image for empty state, and clear log confirmation dialog.",
+  "frontend/src/components/auth/LoginButton.tsx": "Internet Identity login/logout button with loading states, error handling for duplicate authentication, and query cache clearing on logout.",
+  "frontend/src/components/auth/ProfileSetupDialog.tsx": "Modal dialog for first-time user profile setup requiring name input, shown automatically after login when no profile exists, with non-dismissible overlay."
+}
