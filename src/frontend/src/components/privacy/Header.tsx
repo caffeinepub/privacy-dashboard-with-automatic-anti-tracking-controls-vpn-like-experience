@@ -16,14 +16,14 @@ export default function Header() {
             <div className="flex items-center gap-3">
               <img 
                 src="/assets/generated/vpn-shield-logo.dim_512x512.png" 
-                alt="Privacy Shield Logo" 
+                alt="Incognibro Logo" 
                 className="w-10 h-10"
                 width={40}
                 height={40}
               />
               <div>
                 <h1 className="text-xl font-bold flex items-center gap-2">
-                  Privacy Shield
+                  Incognibro
                 </h1>
                 <p className="text-xs text-muted-foreground">Anti-tracking dashboard</p>
               </div>

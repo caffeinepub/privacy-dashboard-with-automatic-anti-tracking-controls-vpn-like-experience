@@ -89,11 +89,35 @@ export class ExternalBlob {
         return this;
     }
 }
+export interface CustomDomainConfig {
+    status: CustomDomainStatus;
+    desiredDomain: string;
+    instructions: string;
+    canonicalUrl: string;
+    dnsSetupHelp: string;
+    requirements: string;
+}
+export interface CustomDomainConfigUpdate {
+    status: CustomDomainStatus;
+    instructions: string;
+    canonicalUrl: string;
+    requirements: string;
+}
 export interface BlocklistUpdateResult {
     newBlocklist: Array<string>;
     message: string;
     success: boolean;
 }
+export type CustomDomainStatus = {
+    __kind__: "pending";
+    pending: null;
+} | {
+    __kind__: "error";
+    error: string;
+} | {
+    __kind__: "configured";
+    configured: null;
+};
 export interface UserProfile {
     name: string;
 }
@@ -112,14 +136,17 @@ export interface backendInterface {
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
+    getCustomDomainConfig(): Promise<CustomDomainConfig | null>;
     getPrivacySettings(): Promise<PrivacySettings>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
     isCallerAdmin(): Promise<boolean>;
+    proposeCustomDomain(domain: string): Promise<void>;
     removeBlockEntry(domain: string): Promise<BlocklistUpdateResult>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
     setAutoStopTracking(autoStop: boolean): Promise<void>;
+    updateCustomDomainConfig(update: CustomDomainConfigUpdate): Promise<void>;
 }
-import type { UserProfile as _UserProfile, UserRole as _UserRole } from "./declarations/backend.did.d.ts";
+import type { CustomDomainConfig as _CustomDomainConfig, CustomDomainConfigUpdate as _CustomDomainConfigUpdate, CustomDomainStatus as _CustomDomainStatus, UserProfile as _UserProfile, UserRole as _UserRole } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
     async _initializeAccessControlWithSecret(arg0: string): Promise<void> {
@@ -192,6 +219,20 @@ export class Backend implements backendInterface {
             return from_candid_UserRole_n4(this._uploadFile, this._downloadFile, result);
         }
     }
+    async getCustomDomainConfig(): Promise<CustomDomainConfig | null> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getCustomDomainConfig();
+                return from_candid_opt_n6(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getCustomDomainConfig();
+            return from_candid_opt_n6(this._uploadFile, this._downloadFile, result);
+        }
+    }
     async getPrivacySettings(): Promise<PrivacySettings> {
         if (this.processError) {
             try {
@@ -231,6 +272,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.isCallerAdmin();
+            return result;
+        }
+    }
+    async proposeCustomDomain(arg0: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.proposeCustomDomain(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.proposeCustomDomain(arg0);
             return result;
         }
     }
@@ -276,12 +331,86 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async updateCustomDomainConfig(arg0: CustomDomainConfigUpdate): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.updateCustomDomainConfig(to_candid_CustomDomainConfigUpdate_n11(this._uploadFile, this._downloadFile, arg0));
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.updateCustomDomainConfig(to_candid_CustomDomainConfigUpdate_n11(this._uploadFile, this._downloadFile, arg0));
+            return result;
+        }
+    }
+}
+function from_candid_CustomDomainConfig_n7(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _CustomDomainConfig): CustomDomainConfig {
+    return from_candid_record_n8(_uploadFile, _downloadFile, value);
+}
+function from_candid_CustomDomainStatus_n9(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _CustomDomainStatus): CustomDomainStatus {
+    return from_candid_variant_n10(_uploadFile, _downloadFile, value);
 }
 function from_candid_UserRole_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _UserRole): UserRole {
     return from_candid_variant_n5(_uploadFile, _downloadFile, value);
 }
 function from_candid_opt_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_UserProfile]): UserProfile | null {
     return value.length === 0 ? null : value[0];
+}
+function from_candid_opt_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_CustomDomainConfig]): CustomDomainConfig | null {
+    return value.length === 0 ? null : from_candid_CustomDomainConfig_n7(_uploadFile, _downloadFile, value[0]);
+}
+function from_candid_record_n8(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    status: _CustomDomainStatus;
+    desiredDomain: string;
+    instructions: string;
+    canonicalUrl: string;
+    dnsSetupHelp: string;
+    requirements: string;
+}): {
+    status: CustomDomainStatus;
+    desiredDomain: string;
+    instructions: string;
+    canonicalUrl: string;
+    dnsSetupHelp: string;
+    requirements: string;
+} {
+    return {
+        status: from_candid_CustomDomainStatus_n9(_uploadFile, _downloadFile, value.status),
+        desiredDomain: value.desiredDomain,
+        instructions: value.instructions,
+        canonicalUrl: value.canonicalUrl,
+        dnsSetupHelp: value.dnsSetupHelp,
+        requirements: value.requirements
+    };
+}
+function from_candid_variant_n10(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    pending: null;
+} | {
+    error: string;
+} | {
+    configured: null;
+}): {
+    __kind__: "pending";
+    pending: null;
+} | {
+    __kind__: "error";
+    error: string;
+} | {
+    __kind__: "configured";
+    configured: null;
+} {
+    return "pending" in value ? {
+        __kind__: "pending",
+        pending: value.pending
+    } : "error" in value ? {
+        __kind__: "error",
+        error: value.error
+    } : "configured" in value ? {
+        __kind__: "configured",
+        configured: value.configured
+    } : value;
 }
 function from_candid_variant_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     admin: null;
@@ -292,8 +421,56 @@ function from_candid_variant_n5(_uploadFile: (file: ExternalBlob) => Promise<Uin
 }): UserRole {
     return "admin" in value ? UserRole.admin : "user" in value ? UserRole.user : "guest" in value ? UserRole.guest : value;
 }
+function to_candid_CustomDomainConfigUpdate_n11(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: CustomDomainConfigUpdate): _CustomDomainConfigUpdate {
+    return to_candid_record_n12(_uploadFile, _downloadFile, value);
+}
+function to_candid_CustomDomainStatus_n13(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: CustomDomainStatus): _CustomDomainStatus {
+    return to_candid_variant_n14(_uploadFile, _downloadFile, value);
+}
 function to_candid_UserRole_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserRole): _UserRole {
     return to_candid_variant_n2(_uploadFile, _downloadFile, value);
+}
+function to_candid_record_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    status: CustomDomainStatus;
+    instructions: string;
+    canonicalUrl: string;
+    requirements: string;
+}): {
+    status: _CustomDomainStatus;
+    instructions: string;
+    canonicalUrl: string;
+    requirements: string;
+} {
+    return {
+        status: to_candid_CustomDomainStatus_n13(_uploadFile, _downloadFile, value.status),
+        instructions: value.instructions,
+        canonicalUrl: value.canonicalUrl,
+        requirements: value.requirements
+    };
+}
+function to_candid_variant_n14(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    __kind__: "pending";
+    pending: null;
+} | {
+    __kind__: "error";
+    error: string;
+} | {
+    __kind__: "configured";
+    configured: null;
+}): {
+    pending: null;
+} | {
+    error: string;
+} | {
+    configured: null;
+} {
+    return value.__kind__ === "pending" ? {
+        pending: value.pending
+    } : value.__kind__ === "error" ? {
+        error: value.error
+    } : value.__kind__ === "configured" ? {
+        configured: value.configured
+    } : value;
 }
 function to_candid_variant_n2(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserRole): {
     admin: null;

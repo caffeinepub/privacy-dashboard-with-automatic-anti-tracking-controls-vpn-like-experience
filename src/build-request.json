@@ -1,154 +1,80 @@
 {
   "kind": "build_request",
-  "title": "Privacy dashboard with automatic anti-tracking controls (VPN-like experience)",
+  "title": "Make Incognibro publicly accessible with custom-domain + SEO readiness, and fix branding name everywhere",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-1",
-      "text": "Build a VPN-like Privacy Dashboard experience (without implementing an actual VPN) that helps users automatically stop tracking by detecting common web/app trackers and blocking them within the app’s simulated traffic model.",
+      "id": "REQ-8",
+      "text": "Rename the app branding to \"Incognibro\" consistently across all user-visible UI text and document metadata (including the header brand name and the HTML document title) so the app no longer displays \"Privacy Shield\" or the old descriptive project title anywhere in the UI.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-14"
         ],
         "quotes": [
-          "Create a VPN that has a privacy feature that automatically stops tracking"
+          "Rename incognibro"
         ]
       },
       "acceptanceCriteria": [
-        "The UI clearly states it is a privacy/anti-tracking dashboard and not a real VPN tunnel.",
-        "A primary toggle labeled in English (e.g., “Auto-stop tracking”) enables/disables anti-tracking.",
-        "The main screen shows current protection status (On/Off) and a short explanation of what happens when enabled."
+        "In frontend/src/components/privacy/Header.tsx, the header brand text shows \"Incognibro\" (not \"Privacy Shield\").",
+        "In frontend/index.html, the <title> is updated to \"Incognibro\".",
+        "All other visible occurrences of the old app name are updated to \"Incognibro\" (e.g., any headings/labels that previously referenced the old name).",
+        "All user-facing text updated/added by this change is in English."
       ]
     },
     {
-      "id": "REQ-2",
-      "text": "Implement tracker detection for user-provided destinations: allow the user to input a URL/domain (and optionally paste a list), scan it against a built-in tracker blocklist, and show which tracker domains would be blocked when “Auto-stop tracking” is enabled.",
+      "id": "REQ-9",
+      "text": "Add basic SEO and indexing readiness for a publicly accessible deployment by providing standard static files and HTML metadata suitable for search engines (while keeping the app as a SPA).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-13",
+          "msg-15"
         ],
         "quotes": [
-          "privacy feature that automatically stops tracking"
+          "I searched it up on google but it won’t come up",
+          "Both"
         ]
       },
       "acceptanceCriteria": [
-        "User can enter a URL/domain and trigger a scan.",
-        "Results display: (a) detected tracker matches, (b) non-tracker domains, and (c) a summary count.",
-        "When Auto-stop tracking is ON, matched trackers are labeled “Blocked”; when OFF, labeled “Allowed.”"
+        "The app serves a robots.txt that allows crawling (no blanket disallow rules).",
+        "The app serves a sitemap.xml suitable for a single-page app (at minimum, includes the root URL entry).",
+        "frontend/index.html includes standard SEO metadata for the Incognibro app (at minimum: updated title alignment with Incognibro and a meta description).",
+        "All added metadata text is in English."
       ]
     },
     {
-      "id": "REQ-3",
-      "text": "Create a Motoko backend API to manage anti-tracking settings and blocklists per user principal, including: get/set Auto-stop tracking toggle; get blocklist; add/remove custom blocked domains; reset to defaults.",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "automatically stops tracking"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Backend exposes methods to read and update the user’s anti-tracking enabled state.",
-        "Backend persists user custom blocked domains keyed by caller principal.",
-        "Backend provides a default blocklist (hardcoded in canister) and merges it with user custom entries when returning the effective list.",
-        "Anonymous/unauthenticated usage is handled gracefully (e.g., defaults are used until the user signs in), without crashes."
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "text": "Connect frontend to backend with React Query for loading/saving privacy settings and custom block entries, including optimistic UI updates and clear error states.",
+      "id": "REQ-10",
+      "text": "Make the project \"custom domain\" ready by adding clear configuration and documentation for mapping a custom domain to the deployed Internet Computer frontend assets, including what the user must set in DNS and what URL should be used as the canonical site URL for SEO.",
       "target": "both",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-15"
         ],
         "quotes": [
-          "privacy feature that automatically stops tracking"
+          "Both"
         ]
       },
       "acceptanceCriteria": [
-        "Toggling Auto-stop tracking updates the UI immediately and persists to backend.",
-        "Adding/removing a custom blocked domain updates the list and persists to backend.",
-        "Network/loading states are visible (skeleton/spinner and disabled buttons where appropriate).",
-        "Errors are shown in English with a retry action."
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "text": "Add a “Protection Log” view that records recent scans/actions in the UI (client-side), including timestamp, input domain/URL, number of trackers detected, and number blocked based on current settings.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "automatically stops tracking"
-        ]
-      },
-      "acceptanceCriteria": [
-        "After each scan, a new log entry appears at the top of the log list.",
-        "Log entries include time, target, detected count, and blocked count.",
-        "User can clear the protection log from the UI."
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "text": "Apply a coherent, distinctive visual theme for a privacy/security product (avoid blue/purple): define consistent colors, typography, spacing, and component styling across the Privacy Dashboard, including light/dark-friendly contrast.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "Create a VPN that has a privacy feature that automatically stops tracking"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Theme is consistent across all new screens/components.",
-        "Color palette avoids blue and purple as primary accents.",
-        "The UI has clear hierarchy and accessible contrast for key states (Protected/Unprotected, Blocked/Allowed)."
-      ]
-    },
-    {
-      "id": "REQ-7",
-      "text": "Add and render generated static image assets (logo and hero) from frontend/public/assets/generated and use them in the dashboard header/empty-state areas.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "Create a VPN that has a privacy feature that automatically stops tracking"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Images exist under frontend/public/assets/generated with the specified filenames.",
-        "Frontend references these images as static assets (no backend image routing).",
-        "Logo and hero are visible in the UI without layout shifts or broken links."
+        "Repository includes a human-readable setup guide describing how to point a custom domain to the app (DNS records and any IC-specific steps), written in English.",
+        "Frontend supports configuring the canonical/public base URL (so sitemap/canonical references can be correct when a custom domain is used).",
+        "Documentation explicitly notes that Google indexing is not immediate and depends on Google crawling after the site is publicly reachable."
       ]
     }
   ],
   "constraints": [
-    "Do not implement or claim to implement a real VPN tunnel, packet routing, device-wide traffic interception, or OS-level tracking prevention; provide an in-app anti-tracking dashboard and simulated blocking based on user input.",
-    "Backend must remain a single Motoko actor (all logic in the main actor file).",
-    "Do not modify files under frontend/src/components/ui or other immutablePaths; compose those components instead.",
-    "All user-facing text must be in English."
+    "Backend must remain a single Motoko actor in backend/main.mo; do not introduce additional backend services.",
+    "Do not edit any files under frontend/src/components/ui or any path listed in frontend.immutablePaths (compose existing components instead).",
+    "Do not add third-party auth providers or external database dependencies; Internet Identity only.",
+    "Do not implement an actual VPN/tunneling feature; keep the existing non-VPN simulation disclaimer behavior intact."
   ],
   "nonGoals": [
-    "Browser extension functionality (e.g., intercepting real browsing requests).",
-    "DNS-level blocking, firewall rules, or system proxy configuration.",
-    "Third-party authentication providers (only Internet Identity if authentication is used).",
-    "Real-time streaming logs or WebSocket-based updates."
+    "Guaranteeing that Google will list/rank the site by a specific time (indexing is controlled by Google).",
+    "Purchasing a domain name or performing registrar-side actions beyond documenting required DNS changes.",
+    "Implementing real network-level tracking interception or system-wide VPN traffic routing."
   ],
   "imageRequirements": {
-    "required": [
-      "Minimal privacy shield logo with a stop-tracking motif, flat vector style, dark background compatible (vpn-shield-logo.dim_512x512.png)",
-      "Wide hero illustration showing abstract network nodes with blocked tracker dots, muted green/charcoal palette, flat/modern style (privacy-hero.dim_1200x600.png)"
-    ],
+    "required": [],
     "edits": []
   }
 }

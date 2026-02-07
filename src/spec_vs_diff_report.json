@@ -1,92 +1,69 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-07T00:15:17.579Z",
-  "summary": "Frontend adds a privacy dashboard UI with scanner, blocklist manager, and activity log, plus React Query hooks and a green/charcoal theme. Backend adds a Motoko actor with privacy settings and blocklist mutation scaffolding, but it appears to enforce authorization (trapping for unauthorized callers) and does not show the required default blocklist merge/reset behavior. Evidence of required generated image files being added is not present in the provided diff summary.",
+  "generatedAt": "2026-02-07T01:18:56.505Z",
+  "summary": "REQ-8 is mostly addressed (header branding updated; index.html title updated but not exactly to just \"Incognibro\"). REQ-9 static robots.txt and sitemap.xml were added and index.html has SEO meta/description, but robots/sitemap contain placeholder domains and do not appear wired to the configurable canonical/base URL. REQ-10 has a setup guide and a frontend base URL config, but the guide content is truncated so IC-specific steps and the required Google-indexing disclaimer cannot be verified; backend custom-domain configuration APIs were added even though REQ-10 only required config/docs.",
   "missing_requirements": [
     {
-      "id": "REQ-3",
-      "requirement": "Backend must handle anonymous/unauthenticated usage gracefully (defaults used until user signs in), without crashes.",
-      "reason": "The backend privacy settings methods shown trap on missing permission, and the frontend calls getPrivacySettings even when using an anonymous actor. This would likely crash/throw rather than gracefully return defaults for anonymous users.",
+      "id": "REQ-8",
+      "requirement": "In frontend/index.html, the <title> is updated to \"Incognibro\".",
+      "reason": "The diff shows the title set to \"Incognibro - Privacy Dashboard\" rather than exactly \"Incognibro\" as stated in the acceptance criteria.",
       "evidence": [
-        "backend/main.mo (getPrivacySettings traps unless #user permission)",
-        "frontend/src/hooks/useActor.ts (returns anonymous actor when not authenticated)",
-        "frontend/src/hooks/useQueries.ts (useGetPrivacySettings calls actor.getPrivacySettings)"
+        "frontend/index.html"
       ]
     },
     {
-      "id": "REQ-3",
-      "requirement": "Backend provides a default blocklist (hardcoded in canister) and merges it with user custom entries when returning the effective list.",
-      "reason": "The backend snippet shows default settings with blockList = [] and no evidence of a hardcoded default tracker list or merge logic in getPrivacySettings/get blocklist responses.",
+      "id": "REQ-10",
+      "requirement": "Frontend supports configuring the canonical/public base URL (so sitemap/canonical references can be correct when a custom domain is used).",
+      "reason": "A configurable base URL exists and canonical link is set at runtime, but the added static robots.txt and sitemap.xml still hardcode/placeholder \"https://your-domain.com\" and are not shown using the configured base URL, so sitemap/robots references will not be correct for a custom domain without manual file edits.",
       "evidence": [
-        "backend/main.mo (default PrivacySettings uses blockList = []; no default tracker domains shown)"
+        "frontend/src/config/site.ts",
+        "frontend/src/seo/useSeoMetadata.ts",
+        "frontend/public/robots.txt",
+        "frontend/public/sitemap.xml"
       ]
     },
     {
-      "id": "REQ-3",
-      "requirement": "Backend includes a reset-to-defaults API for privacy settings/blocklist.",
-      "reason": "No reset-to-defaults method is shown in the backend diff summary.",
+      "id": "REQ-10",
+      "requirement": "Documentation explicitly notes that Google indexing is not immediate and depends on Google crawling after the site is publicly reachable.",
+      "reason": "A custom domain setup guide was added but its content is truncated in the diff summary before any mention of Google indexing; the required disclaimer cannot be verified from the provided evidence.",
       "evidence": [
-        "backend/main.mo (no reset method visible in provided content)"
+        "frontend/CUSTOM_DOMAIN_SETUP.md"
       ]
     },
     {
-      "id": "REQ-7",
-      "requirement": "Add generated static image assets under frontend/public/assets/generated with specified filenames.",
-      "reason": "The UI references the images, but the diff summary does not show the image files being added (and omitted files list does not provide evidence they exist).",
+      "id": "REQ-10",
+      "requirement": "Setup guide describes IC-specific steps for mapping a custom domain (DNS records and any IC-specific steps).",
+      "reason": "The setup guide is truncated in the diff summary; beyond an initial CNAME suggestion, additional IC-specific steps (if any) cannot be verified from the provided evidence.",
       "evidence": [
-        "frontend/src/components/privacy/Header.tsx (references /assets/generated/vpn-shield-logo.dim_512x512.png)",
-        "frontend/src/components/privacy/ProtectionLogView.tsx (references /assets/generated/privacy-hero.dim_1200x600.png)"
+        "frontend/CUSTOM_DOMAIN_SETUP.md"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "User profile system (get/save profile) and mandatory profile setup dialog flow.",
-      "reason": "BuildRequest does not ask for user profiles or name personalization; it only mentions per-principal privacy settings and optional authentication.",
+      "description": "Backend custom-domain configuration state and admin APIs (proposeCustomDomain/updateCustomDomainConfig/getCustomDomainConfig) plus a migration adding customDomainConfig to canister state.",
+      "reason": "REQ-10 only asks for documentation and frontend configurability for canonical/public base URL. The diff introduces new backend types/state and admin methods for custom domain management, which were not requested.",
       "evidence": [
-        "backend/main.mo (UserProfile types and get/save profile methods)",
-        "frontend/src/components/auth/ProfileSetupDialog.tsx",
-        "frontend/src/App.tsx (shows ProfileSetupDialog based on profile state)",
-        "frontend/src/hooks/useQueries.ts (useGetCallerUserProfile/useSaveCallerUserProfile)"
-      ]
-    },
-    {
-      "description": "Authorization/access control initialization with admin token read from URL (caffeineAdminToken) and _initializeAccessControlWithSecret call.",
-      "reason": "BuildRequest does not request admin-token based access control or secret URL parameters; it only allows Internet Identity if auth is used.",
-      "evidence": [
-        "frontend/src/hooks/useActor.ts (getSecretParameter('caffeineAdminToken'), actor._initializeAccessControlWithSecret(adminToken))",
-        "backend/main.mo (imports MixinAuthorization/AccessControl and traps on permission checks)",
-        "frontend/src/utils/urlParams.ts (URL/session parameter utilities)"
+        "backend/main.mo",
+        "backend/migration.mo"
       ]
     }
   ],
-  "confidence": 0.68,
+  "confidence": 0.64,
   "changed_files": [
-    "all_files_summary.json",
     "backend/main.mo",
+    "backend/migration.mo",
     "frontend-file-summaries.txt",
-    "frontend/index.css",
+    "frontend/.env.example",
+    "frontend/CUSTOM_DOMAIN_SETUP.md",
     "frontend/index.html",
+    "frontend/public/robots.txt",
+    "frontend/public/sitemap.xml",
     "frontend/src/App.tsx",
-    "frontend/src/components/auth/LoginButton.tsx",
-    "frontend/src/components/auth/ProfileSetupDialog.tsx",
-    "frontend/src/components/privacy/BlocklistManager.tsx",
     "frontend/src/components/privacy/Header.tsx",
-    "frontend/src/components/privacy/ProtectionLogView.tsx",
-    "frontend/src/components/privacy/ProtectionStatusCard.tsx",
-    "frontend/src/components/privacy/ScanResultsList.tsx",
-    "frontend/src/components/privacy/TrackerScanner.tsx",
-    "frontend/src/hooks/useActor.ts",
-    "frontend/src/hooks/useInternetIdentity.ts",
-    "frontend/src/hooks/useProtectionLog.ts",
-    "frontend/src/hooks/useQueries.ts",
-    "frontend/src/index.css",
-    "frontend/src/lib/domainParsing.ts",
-    "frontend/src/lib/trackerBlocklist.ts",
-    "frontend/src/main.tsx",
-    "frontend/src/utils/urlParams.ts",
-    "frontend/tailwind.config.js",
+    "frontend/src/config/site.ts",
+    "frontend/src/seo/useSeoMetadata.ts",
     "project_state.json"
   ]
 }

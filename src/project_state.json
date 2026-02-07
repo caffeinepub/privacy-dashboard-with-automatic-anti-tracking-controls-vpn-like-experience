@@ -1,13 +1,16 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
+  "projectStateVersion": 5,
   "summary": "Build a VPN product with a privacy feature that automatically detects and stops tracking.",
   "architectural_notes": [
-    "Scope includes VPN functionality plus automatic tracker detection and blocking/anti-tracking privacy controls."
+    "Scope includes VPN functionality plus automatic tracker detection and blocking/anti-tracking privacy controls.",
+    "App name/branding should be “Incognibro” and applied consistently across UI and project metadata.",
+    "To appear on Google, the app must be publicly accessible at a stable URL (ideally a custom domain) and allow indexing; indexing may take days/weeks after deployment."
   ],
-  "known_issues": [],
-  "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Minimal privacy shield logo with a stop-tracking motif, flat vector style, dark background compatible (vpn-shield-logo.dim_512x512.png)\n- Wide hero illustration showing abstract network nodes with blocked tracker dots, muted green/charcoal palette, flat/modern style (privacy-hero.dim_1200x600.png)",
+  "known_issues": [
+    "App/project rename to “Incognibro” is not consistently applied (user reports name still not updated)."
+  ],
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-build-a-vpn-like-privacy-dashboard-experience-without-implementing-an-actual-vpn-that-helps-users-automatically-stop-tracking-by-detecting-common-web-app-trackers-and-blocking-them-within-the-app-s-simulated-traffic-model",
@@ -56,6 +59,30 @@
         "REQ-7"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-rename-the-app-branding-to-incognibro-consistently-across-all-user-visible-ui-text-and-document-metadata-including-the-header-brand-name-and-the-html-document-title-so-the-app-no-longer-displays-privacy-shield-or-the-old-descriptive-project-title-anywhere-in-the-ui",
+      "title": "Rename the app branding to \"Incognibro\" consistently across all user-visible UI text and document metadata (including the header brand name and the HTML document title) so the app no longer displays \"Privacy Shield\" or the old descriptive project title anywhere in the UI.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-basic-seo-and-indexing-readiness-for-a-publicly-accessible-deployment-by-providing-standard-static-files-and-html-metadata-suitable-for-search-engines-while-keeping-the-app-as-a-spa",
+      "title": "Add basic SEO and indexing readiness for a publicly accessible deployment by providing standard static files and HTML metadata suitable for search engines (while keeping the app as a SPA).",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-project-custom-domain-ready-by-adding-clear-configuration-and-documentation-for-mapping-a-custom-domain-to-the-deployed-internet-computer-frontend-assets-including-what-the-user-must-set-in-dns-and-what-url-should-be-used-as-the-canonical-site-url-for-seo",
+      "title": "Make the project \"custom domain\" ready by adding clear configuration and documentation for mapping a custom domain to the deployed Internet Computer frontend assets, including what the user must set in DNS and what URL should be used as the canonical site URL for SEO.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -72,9 +99,21 @@
         "REQ-3"
       ],
       "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Rename the app/project branding to “Incognibro” consistently across the website/app UI and project metadata.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Make the app publicly accessible on the web and set up a custom domain so it can be indexed by Google (SEO/indexing readiness).",
+      "reqIds": [],
+      "status": "pending"
     }
   ],
-  "projectName": "Privacy dashboard with automatic anti-tracking controls (VPN-like experience)",
+  "projectName": "Incognibro",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

@@ -15,6 +15,23 @@ export interface BlocklistUpdateResult {
   'message' : string,
   'success' : boolean,
 }
+export interface CustomDomainConfig {
+  'status' : CustomDomainStatus,
+  'desiredDomain' : string,
+  'instructions' : string,
+  'canonicalUrl' : string,
+  'dnsSetupHelp' : string,
+  'requirements' : string,
+}
+export interface CustomDomainConfigUpdate {
+  'status' : CustomDomainStatus,
+  'instructions' : string,
+  'canonicalUrl' : string,
+  'requirements' : string,
+}
+export type CustomDomainStatus = { 'pending' : null } |
+  { 'error' : string } |
+  { 'configured' : null };
 export interface PrivacySettings {
   'blockList' : Array<string>,
   'autoStopTracking' : boolean,
@@ -29,12 +46,18 @@ export interface _SERVICE {
   'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
+  'getCustomDomainConfig' : ActorMethod<[], [] | [CustomDomainConfig]>,
   'getPrivacySettings' : ActorMethod<[], PrivacySettings>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
+  'proposeCustomDomain' : ActorMethod<[string], undefined>,
   'removeBlockEntry' : ActorMethod<[string], BlocklistUpdateResult>,
   'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
   'setAutoStopTracking' : ActorMethod<[boolean], undefined>,
+  'updateCustomDomainConfig' : ActorMethod<
+    [CustomDomainConfigUpdate],
+    undefined
+  >,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

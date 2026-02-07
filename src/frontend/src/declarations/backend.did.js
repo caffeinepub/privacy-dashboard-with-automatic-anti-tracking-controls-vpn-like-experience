@@ -19,9 +19,28 @@ export const UserRole = IDL.Variant({
   'guest' : IDL.Null,
 });
 export const UserProfile = IDL.Record({ 'name' : IDL.Text });
+export const CustomDomainStatus = IDL.Variant({
+  'pending' : IDL.Null,
+  'error' : IDL.Text,
+  'configured' : IDL.Null,
+});
+export const CustomDomainConfig = IDL.Record({
+  'status' : CustomDomainStatus,
+  'desiredDomain' : IDL.Text,
+  'instructions' : IDL.Text,
+  'canonicalUrl' : IDL.Text,
+  'dnsSetupHelp' : IDL.Text,
+  'requirements' : IDL.Text,
+});
 export const PrivacySettings = IDL.Record({
   'blockList' : IDL.Vec(IDL.Text),
   'autoStopTracking' : IDL.Bool,
+});
+export const CustomDomainConfigUpdate = IDL.Record({
+  'status' : CustomDomainStatus,
+  'instructions' : IDL.Text,
+  'canonicalUrl' : IDL.Text,
+  'requirements' : IDL.Text,
 });
 
 export const idlService = IDL.Service({
@@ -30,6 +49,11 @@ export const idlService = IDL.Service({
   'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
   'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'getCustomDomainConfig' : IDL.Func(
+      [],
+      [IDL.Opt(CustomDomainConfig)],
+      ['query'],
+    ),
   'getPrivacySettings' : IDL.Func([], [PrivacySettings], []),
   'getUserProfile' : IDL.Func(
       [IDL.Principal],
@@ -37,9 +61,11 @@ export const idlService = IDL.Service({
       ['query'],
     ),
   'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  'proposeCustomDomain' : IDL.Func([IDL.Text], [], []),
   'removeBlockEntry' : IDL.Func([IDL.Text], [BlocklistUpdateResult], []),
   'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
   'setAutoStopTracking' : IDL.Func([IDL.Bool], [], []),
+  'updateCustomDomainConfig' : IDL.Func([CustomDomainConfigUpdate], [], []),
 });
 
 export const idlInitArgs = [];
@@ -56,9 +82,28 @@ export const idlFactory = ({ IDL }) => {
     'guest' : IDL.Null,
   });
   const UserProfile = IDL.Record({ 'name' : IDL.Text });
+  const CustomDomainStatus = IDL.Variant({
+    'pending' : IDL.Null,
+    'error' : IDL.Text,
+    'configured' : IDL.Null,
+  });
+  const CustomDomainConfig = IDL.Record({
+    'status' : CustomDomainStatus,
+    'desiredDomain' : IDL.Text,
+    'instructions' : IDL.Text,
+    'canonicalUrl' : IDL.Text,
+    'dnsSetupHelp' : IDL.Text,
+    'requirements' : IDL.Text,
+  });
   const PrivacySettings = IDL.Record({
     'blockList' : IDL.Vec(IDL.Text),
     'autoStopTracking' : IDL.Bool,
+  });
+  const CustomDomainConfigUpdate = IDL.Record({
+    'status' : CustomDomainStatus,
+    'instructions' : IDL.Text,
+    'canonicalUrl' : IDL.Text,
+    'requirements' : IDL.Text,
   });
   
   return IDL.Service({
@@ -67,6 +112,11 @@ export const idlFactory = ({ IDL }) => {
     'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
     'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'getCustomDomainConfig' : IDL.Func(
+        [],
+        [IDL.Opt(CustomDomainConfig)],
+        ['query'],
+      ),
     'getPrivacySettings' : IDL.Func([], [PrivacySettings], []),
     'getUserProfile' : IDL.Func(
         [IDL.Principal],
@@ -74,9 +124,11 @@ export const idlFactory = ({ IDL }) => {
         ['query'],
       ),
     'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+    'proposeCustomDomain' : IDL.Func([IDL.Text], [], []),
     'removeBlockEntry' : IDL.Func([IDL.Text], [BlocklistUpdateResult], []),
     'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
     'setAutoStopTracking' : IDL.Func([IDL.Bool], [], []),
+    'updateCustomDomainConfig' : IDL.Func([CustomDomainConfigUpdate], [], []),
   });
 };
 

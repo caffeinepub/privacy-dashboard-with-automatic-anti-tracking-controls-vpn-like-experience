@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from '@/components/ui/sonner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -10,6 +10,7 @@ import ProtectionLogView from './components/privacy/ProtectionLogView';
 import ProfileSetupDialog from './components/auth/ProfileSetupDialog';
 import { useInternetIdentity } from './hooks/useInternetIdentity';
 import { useGetCallerUserProfile } from './hooks/useQueries';
+import { useSeoMetadata } from './seo/useSeoMetadata';
 
 export default function App() {
   const { identity } = useInternetIdentity();
@@ -18,6 +19,12 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('scanner');
 
   const showProfileSetup = isAuthenticated && !profileLoading && isFetched && userProfile === null;
+
+  // Set SEO metadata
+  useSeoMetadata({
+    title: 'Incognibro - Privacy Dashboard',
+    description: 'Privacy dashboard with automatic anti-tracking controls. Detect and block trackers to protect your online privacy.',
+  });
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

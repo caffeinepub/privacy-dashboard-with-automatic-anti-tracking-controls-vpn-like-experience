@@ -1,212 +1,100 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Privacy Dashboard (simulated anti-tracking)",
+  "title": "Incognibro public accessibility: branding, SEO static files, and custom-domain readiness (frontend-only)",
   "requirements": [
     {
-      "id": "REQ-1",
-      "summary": "Create a VPN-like privacy dashboard UI (explicitly not a real VPN) with a primary Auto-stop tracking toggle and clear protection status messaging.",
+      "id": "REQ-8",
+      "summary": "Rename all user-visible branding and document metadata to “Incognibro” so no old name appears in the UI.",
       "acceptanceCriteria": [
-        "The UI clearly states it is a privacy/anti-tracking dashboard and not a real VPN tunnel.",
-        "A primary toggle labeled in English (e.g., “Auto-stop tracking”) enables/disables anti-tracking.",
-        "The main screen shows current protection status (On/Off) and a short explanation of what happens when enabled."
+        "In frontend/src/components/privacy/Header.tsx, the header brand text shows \"Incognibro\" (not \"Privacy Shield\").",
+        "In frontend/index.html, the <title> is updated to \"Incognibro\".",
+        "All other visible occurrences of the old app name are updated to \"Incognibro\" (e.g., any headings/labels that previously referenced the old name).",
+        "All user-facing text updated/added by this change is in English."
       ],
       "file_operations": [
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "create",
-          "description": "Create the main app shell rendering the Privacy Dashboard experience, including a prominent disclaimer that it is not a real VPN tunnel and a primary “Auto-stop tracking” control area. Compose shadcn-ui components (e.g., Card, Switch, Badge, Alert) to present protection status; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/privacy/ProtectionStatusCard.tsx",
-          "operation": "create",
-          "description": "Add a reusable status card that shows Protected/Unprotected state, short explanation text, and the primary “Auto-stop tracking” toggle UI. Use shadcn-ui Card/Switch/Badge for consistent styling; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/privacy/Header.tsx",
-          "operation": "create",
-          "description": "Create a dashboard header that includes product name, disclaimer snippet (not a real VPN), and space for the generated logo asset. Use shadcn-ui typography primitives (or Tailwind utility classes) for hierarchy; verify the component's usage instructions before implementing."
-        }
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "summary": "Implement in-app simulated tracker detection: user inputs a URL/domain (or list), scan against a built-in blocklist + effective blocklist, and display results with Blocked/Allowed based on current toggle state.",
-      "acceptanceCriteria": [
-        "User can enter a URL/domain and trigger a scan.",
-        "Results display: (a) detected tracker matches, (b) non-tracker domains, and (c) a summary count.",
-        "When Auto-stop tracking is ON, matched trackers are labeled “Blocked”; when OFF, labeled “Allowed.”"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/lib/trackerBlocklist.ts",
-          "operation": "create",
-          "description": "Add a small built-in tracker domain list (frontend fallback) and helper(s) to normalize/compare domains (e.g., suffix match) to simulate detection without intercepting real traffic."
-        },
-        {
-          "path": "frontend/src/lib/domainParsing.ts",
-          "operation": "create",
-          "description": "Implement URL/domain parsing utilities for user input (single URL/domain or pasted list), returning normalized domains and handling invalid inputs with English error messages."
-        },
-        {
-          "path": "frontend/src/components/privacy/TrackerScanner.tsx",
-          "operation": "create",
-          "description": "Create the scan UI: input field + optional multiline list, Scan button, and results sections (Detected trackers, Non-tracker domains, Summary counts). Use shadcn-ui Input/Textarea/Button/Tabs (or Accordion) and Badge for Blocked/Allowed labels; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/privacy/ScanResultsList.tsx",
-          "operation": "create",
-          "description": "Add a presentational component to render categorized scan results with accessible labels and clear Blocked/Allowed state derived from the current Auto-stop tracking setting. Use shadcn-ui Badge and separators; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Wire TrackerScanner into the main dashboard view and connect it to the current Auto-stop tracking state and the effective blocklist (backend-loaded when available, otherwise frontend fallback)."
-        }
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "summary": "Use React Query to load/persist privacy settings and custom block entries with optimistic updates, loading states, and clear error+retry UI.",
-      "acceptanceCriteria": [
-        "Toggling Auto-stop tracking updates the UI immediately and persists to backend.",
-        "Adding/removing a custom blocked domain updates the list and persists to backend.",
-        "Network/loading states are visible (skeleton/spinner and disabled buttons where appropriate).",
-        "Errors are shown in English with a retry action."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/hooks/usePrivacySettings.ts",
-          "operation": "create",
-          "description": "Create React Query hooks for getPrivacySettings and setAutoStopTracking, including optimistic updates for the toggle and query invalidation on success/failure. Integrate with the existing useActor hook."
-        },
-        {
-          "path": "frontend/src/hooks/useBlocklistMutations.ts",
-          "operation": "create",
-          "description": "Create React Query mutations for addBlockEntry and removeBlockEntry with optimistic UI updates and rollback on error, returning user-friendly English errors."
-        },
-        {
-          "path": "frontend/src/components/privacy/BlocklistManager.tsx",
-          "operation": "create",
-          "description": "Build a UI to view the effective blocklist and add/remove custom blocked domains with disabled states during mutations, and visible errors with a retry action. Use shadcn-ui Input/Button/Card/Alert/Skeleton; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/privacy/QueryState.tsx",
-          "operation": "create",
-          "description": "Add shared UI helpers for loading (skeleton/spinner), empty state, and error panels with a Retry button to standardize query/mutation state presentation. Use shadcn-ui Skeleton/Alert/Button; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Wire React Query-backed settings and blocklist manager into the dashboard. Ensure anonymous users are handled gracefully in UI (e.g., show defaults and a non-blocking prompt to log in for persistence) while still allowing scans."
-        },
-        {
-          "path": "frontend/src/components/auth/LoginButton.tsx",
-          "operation": "create",
-          "description": "Add a Login/Logout button using the authorization component’s Internet Identity approach (useInternetIdentity + queryClient.clear on logout). Verify the component's usage instructions before implementing."
-        },
         {
           "path": "frontend/src/components/privacy/Header.tsx",
           "operation": "modify",
-          "description": "Render the new LoginButton in the header and show the authenticated user state at a high level (without displaying principal id). Verify the component's usage instructions before implementing."
-        }
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "summary": "Add a client-side Protection Log view recording recent scans/actions with timestamps and allow clearing the log.",
-      "acceptanceCriteria": [
-        "After each scan, a new log entry appears at the top of the log list.",
-        "Log entries include time, target, detected count, and blocked count.",
-        "User can clear the protection log from the UI."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/types/protectionLog.ts",
-          "operation": "create",
-          "description": "Define Protection Log entry types (timestamp, target, detected count, blocked count, and whether Auto-stop tracking was enabled at scan time)."
+          "description": "Update the displayed brand name to “Incognibro” and replace any remaining old-name strings in user-visible header content (including image alt text) while keeping the existing non‑VPN disclaimer behavior intact."
         },
         {
-          "path": "frontend/src/hooks/useProtectionLog.ts",
-          "operation": "create",
-          "description": "Implement client-side log state with local persistence (e.g., localStorage) supporting addEntry (prepend newest), list retrieval, and clearLog."
-        },
-        {
-          "path": "frontend/src/components/privacy/ProtectionLogView.tsx",
-          "operation": "create",
-          "description": "Create a Protection Log view listing entries with clear formatting and a “Clear log” action. Use shadcn-ui Card/Button/Badge and an empty-state that can show the generated hero image; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/privacy/TrackerScanner.tsx",
+          "path": "frontend/index.html",
           "operation": "modify",
-          "description": "After each successful scan, append a Protection Log entry capturing time, input target, detected trackers count, and blocked count computed from current Auto-stop tracking state."
+          "description": "Update the document <title> to “Incognibro” and ensure any other old-name metadata text is replaced with English Incognibro branding."
         },
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Wire the Protection Log view into the dashboard (e.g., as a tab/section alongside Scanner and Blocklist) so it is reachable and not orphaned. Use shadcn-ui Tabs; verify the component's usage instructions before implementing."
+          "description": "Audit and update any remaining user-visible occurrences of the old app name (if present) so the UI is consistently branded as “Incognibro” in English."
         }
       ]
     },
     {
-      "id": "REQ-6",
-      "summary": "Apply a cohesive privacy/security visual theme (non-blue/purple accents) with accessible contrast across the dashboard and states.",
+      "id": "REQ-9",
+      "summary": "Add SPA-friendly SEO and indexing readiness via standard static files and basic HTML metadata.",
       "acceptanceCriteria": [
-        "Theme is consistent across all new screens/components.",
-        "Color palette avoids blue and purple as primary accents.",
-        "The UI has clear hierarchy and accessible contrast for key states (Protected/Unprotected, Blocked/Allowed)."
+        "The app serves a robots.txt that allows crawling (no blanket disallow rules).",
+        "The app serves a sitemap.xml suitable for a single-page app (at minimum, includes the root URL entry).",
+        "frontend/index.html includes standard SEO metadata for the Incognibro app (at minimum: updated title alignment with Incognibro and a meta description).",
+        "All added metadata text is in English."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/index.css",
+          "path": "frontend/public/robots.txt",
           "operation": "create",
-          "description": "Add global styles and CSS variables (used by Tailwind/shadcn-ui tokens) to establish a muted green/charcoal theme with light/dark-friendly contrast, ensuring primary accents are not blue/purple. Apply consistent typography and spacing defaults."
+          "description": "Add robots.txt that allows crawling (no blanket disallow) and references the sitemap location for Incognibro."
         },
         {
-          "path": "frontend/tailwind.config.js",
-          "operation": "modify",
-          "description": "Adjust/extend theme tokens if needed to support the new palette and consistent semantic colors for Protected/Unprotected and Blocked/Allowed states (without making blue/purple primary accents)."
+          "path": "frontend/public/sitemap.xml",
+          "operation": "create",
+          "description": "Add a minimal sitemap.xml for a single-page app that includes at least the root URL entry; align the URL(s) with the project’s configurable canonical/public base URL strategy (see REQ-10)."
         },
         {
-          "path": "frontend/src/components/privacy/ProtectionStatusCard.tsx",
+          "path": "frontend/index.html",
           "operation": "modify",
-          "description": "Ensure the protected/unprotected visual states use the new semantic colors with accessible contrast and clear hierarchy. Verify shadcn-ui component styling guidance before implementing."
+          "description": "Add standard SEO metadata in English suitable for a SPA (at minimum: meta description) and ensure the title aligns with “Incognibro”; include a canonical link strategy compatible with REQ-10’s configurable public base URL."
         },
         {
-          "path": "frontend/src/components/privacy/ScanResultsList.tsx",
+          "path": "frontend/src/seo/useSeoMetadata.ts",
+          "operation": "create",
+          "description": "Create a small SEO helper hook to set/update document title and canonical/meta description at runtime for SPA navigation, using the configured public base URL (see REQ-10)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Apply consistent Blocked/Allowed styling using theme semantic colors and badges with accessible contrast. Verify shadcn-ui component styling guidance before implementing."
+          "description": "Wire the SEO metadata helper so it runs for the SPA (at least on initial load) and keeps Incognibro’s title/description/canonical consistent."
         }
       ]
     },
     {
-      "id": "REQ-7",
-      "summary": "Add and render generated static logo and hero images from frontend/public/assets/generated in the header and empty states.",
+      "id": "REQ-10",
+      "summary": "Add custom-domain readiness documentation and frontend configuration for canonical/public base URL used by SEO artifacts.",
       "acceptanceCriteria": [
-        "Images exist under frontend/public/assets/generated with the specified filenames.",
-        "Frontend references these images as static assets (no backend image routing).",
-        "Logo and hero are visible in the UI without layout shifts or broken links."
+        "Repository includes a human-readable setup guide describing how to point a custom domain to the app (DNS records and any IC-specific steps), written in English.",
+        "Frontend supports configuring the canonical/public base URL (so sitemap/canonical references can be correct when a custom domain is used).",
+        "Documentation explicitly notes that Google indexing is not immediate and depends on Google crawling after the site is publicly reachable."
       ],
       "file_operations": [
         {
-          "path": "frontend/public/assets/generated/vpn-shield-logo.dim_512x512.png",
+          "path": "frontend/src/config/site.ts",
           "operation": "create",
-          "description": "Add the generated logo asset at the exact required path and filename so the frontend can reference it as a static asset."
+          "description": "Add a central site configuration module that resolves the canonical/public base URL from a build-time environment variable (with a safe runtime fallback), to be used by SEO metadata and sitemap guidance."
         },
         {
-          "path": "frontend/public/assets/generated/privacy-hero.dim_1200x600.png",
+          "path": "frontend/.env.example",
           "operation": "create",
-          "description": "Add the generated hero illustration asset at the exact required path and filename so the frontend can reference it as a static asset."
+          "description": "Document the environment variable(s) needed to configure the canonical/public base URL for Incognibro (example values in English)."
         },
         {
-          "path": "frontend/src/components/privacy/Header.tsx",
-          "operation": "modify",
-          "description": "Render the logo image from frontend/public/assets/generated/vpn-shield-logo.dim_512x512.png in the dashboard header with fixed dimensions to avoid layout shifts."
+          "path": "frontend/CUSTOM_DOMAIN_SETUP.md",
+          "operation": "create",
+          "description": "Create an English setup guide for mapping a custom domain to the deployed Internet Computer frontend assets, including required DNS records, any IC-specific steps, the canonical site URL to use for SEO, and an explicit note that Google indexing is not immediate and depends on crawling once the site is publicly reachable."
         },
         {
-          "path": "frontend/src/components/privacy/ProtectionLogView.tsx",
+          "path": "frontend/public/sitemap.xml",
           "operation": "modify",
-          "description": "Use the hero image frontend/public/assets/generated/privacy-hero.dim_1200x600.png in an empty-state area (e.g., when the log is empty) with appropriate sizing to avoid layout shifts."
+          "description": "Align sitemap.xml guidance/content with the canonical/public base URL configuration approach described in frontend/src/config/site.ts and the custom-domain setup guide (ensure at least the root URL entry is present)."
         }
       ]
     }
